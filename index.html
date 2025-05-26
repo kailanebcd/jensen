@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Jensen Huang Experience: Leading Through Impossible</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(circle at center, rgba(118, 255, 3, 0.1) 0%, transparent 70%);
+        }
+
+        .neural-network {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: 
+                radial-gradient(circle at 20% 30%, #76ff03 2px, transparent 2px),
+                radial-gradient(circle at 80% 20%, #76ff03 1px, transparent 1px),
+                radial-gradient(circle at 60% 70%, #76ff03 1px, transparent 1px);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.2; }
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #76ff03, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 800px;
+        }
+
+        .scenario-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(118, 255, 3, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem;
+            max-width: 500px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scenario-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(118, 255, 3, 0.3);
+            border-color: #76ff03;
+        }
+
+        .scenario-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(118, 255, 3, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .scenario-card:hover::before {
+            left: 100%;
+        }
+
+        .paths-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .experience-section {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            display: none;
+        }
+
+        .experience-section.active {
+            display: block;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #76ff03;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin: 2rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #76ff03, #ffffff);
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+
+        .decision-point {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 2rem auto;
+            max-width: 1000px;
+            border: 1px solid rgba(118, 255, 3, 0.2);
+        }
+
+        .decision-question {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #76ff03;
+        }
+
+        .choices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .choice-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(118, 255, 3, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .choice-button:hover {
+            background: rgba(118, 255, 3, 0.1);
+            border-color: #76ff03;
+            transform: scale(1.02);
+        }
+
+        .choice-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #76ff03;
+        }
+
+        .consequence-panel {
+            background: rgba(118, 255, 3, 0.1);
+            border-left: 4px solid #76ff03;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 0 15px 15px 0;
+            display: none;
+        }
+
+        .consequence-panel.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .insight-card {
+            background: linear-gradient(135deg, rgba(118, 255, 3, 0.1), rgba(255, 255, 255, 0.05));
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            border: 1px solid rgba(118, 255, 3, 0.3);
+        }
+
+        .quote {
+            font-size: 1.3rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: #76ff03;
+            text-align: center;
+        }
+
+        .quote::before { content: '"'; }
+        .quote::after { content: '"'; }
+
+        .navigation {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 1rem;
+            z-index: 1000;
+        }
+
+        .nav-button {
+            background: rgba(118, 255, 3, 0.2);
+            border: 2px solid #76ff03;
+            border-radius: 50px;
+            padding: 1rem 2rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-button:hover {
+            background: rgba(118, 255, 3, 0.3);
+            transform: scale(1.05);
+        }
+
+        .perspective-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .perspective-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(118, 255, 3, 0.3);
+            border-radius: 25px;
+            padding: 1rem 2rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .perspective-btn.active {
+            background: rgba(118, 255, 3, 0.2);
+            border-color: #76ff03;
+        }
+
+        .simulation-panel {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .slider-container {
+            margin: 1.5rem 0;
+        }
+
+        .slider-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #76ff03;
+        }
+
+        .slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.2);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #76ff03;
+            cursor: pointer;
+        }
+
+        .result-display {
+            background: rgba(118, 255, 3, 0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .action-panel {
+            background: linear-gradient(135deg, rgba(118, 255, 3, 0.1), rgba(255, 255, 255, 0.05));
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem auto;
+            max-width: 900px;
+            text-align: center;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #76ff03, #ffffff);
+            color: #000;
+            border: none;
+            border-radius: 25px;
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 1rem;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(118, 255, 3, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .paths-container { flex-direction: column; align-items: center; }
+            .choices-grid { grid-template-columns: 1fr; }
+            .navigation { bottom: 1rem; right: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero-section" id="hero">
+        <div class="neural-network"></div>
+        <h1 class="hero-title">The Impossible Decision</h1>
+        <p class="hero-subtitle">
+            You are the CEO of a tech company facing an existential crisis. 
+            Your current technology is becoming obsolete, but the path forward requires 
+            betting everything on an unproven approach that others call impossible.
+            <br><br>
+            <strong>How will you lead when failure means everything ends?</strong>
+        </p>
+        
+        <div class="paths-container">
+            <div class="scenario-card" onclick="startExperience('crisis')">
+                <h3>The Crisis Moment</h3>
+                <p>Navigate a critical business decision that could make or break your company. Experience the pressure of betting on breakthrough innovation.</p>
+            </div>
+            <div class="scenario-card" onclick="startExperience('leadership')">
+                <h3>The Leadership Lab</h3>
+                <p>Step into Jensen's shoes and practice his decision-making frameworks on real scenarios from NVIDIA's journey.</p>
+            </div>
+            <div class="scenario-card" onclick="startExperience('future')">
+                <h3>The Future Builder</h3>
+                <p>Use Jensen's principles to make strategic bets on emerging technologies. See how your choices shape the future.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Crisis Moment Experience -->
+    <div class="experience-section" id="crisis">
+        <div class="progress-bar">
+            <div class="progress-fill" style="width: 20%"></div>
+        </div>
+        
+        <div class="section-header">
+            <h2 class="section-title">The GPU Crisis of 2008</h2>
+            <p>You're facing the worst economic downturn in decades. GPU sales are plummeting. Your board wants you to cut R&D and focus on survival. But you see an opportunity others miss...</p>
+        </div>
+
+        <div class="decision-point">
+            <div class="decision-question">
+                The financial crisis has hit. GPU demand is down 40%. Your engineering team has an idea for "CUDA" - making GPUs programmable for general computing. It will cost $500M and take 3 years with no guaranteed market. What do you do?
+            </div>
+
+            <div class="choices-grid">
+                <div class="choice-button" onclick="makeChoice('crisis', 'survival')">
+                    <div class="choice-title">Play It Safe</div>
+                    <p>Cut costs, focus on traditional graphics, wait for the market to recover. Preserve cash and jobs.</p>
+                </div>
+                <div class="choice-button" onclick="makeChoice('crisis', 'pivot')">
+                    <div class="choice-title">Bet on CUDA</div>
+                    <p>Invest heavily in making GPUs programmable. Risk everything on a vision others don't see.</p>
+                </div>
+                <div class="choice-button" onclick="makeChoice('crisis', 'hybrid')">
+                    <div class="choice-title">Hedge the Bet</div>
+                    <p>Invest modestly in CUDA while maintaining traditional business. Balanced approach.</p>
+                </div>
+            </div>
+
+            <div class="consequence-panel" id="crisis-consequence">
+                <!-- Consequences will be shown here -->
+            </div>
+        </div>
+
+        <div class="insight-card">
+            <div class="quote">Our job is to take on the problems that others find impossible to solve</div>
+            <p><strong>Jensen's Principle:</strong> When everyone else is focused on survival, that's when breakthrough opportunities emerge. The impossible problems are where competitive advantage lives.</p>
+        </div>
+    </div>
+
+    <!-- Leadership Lab Experience -->
+    <div class="experience-section" id="leadership">
+        <div class="progress-bar">
+            <div class="progress-fill" style="width: 60%"></div>
+        </div>
+
+        <div class="section-header">
+            <h2 class="section-title">The Leadership Simulator</h2>
+            <p>Experience how different leadership approaches create different outcomes using Jensen's frameworks.</p>
+        </div>
+
+        <div class="perspective-toggle">
+            <div class="perspective-btn active" onclick="switchPerspective('ceo')">CEO View</div>
+            <div class="perspective-btn" onclick="switchPerspective('engineer')">Engineer View</div>
+            <div class="perspective-btn" onclick="switchPerspective('investor')">Investor View</div>
+        </div>
+
+        <div class="simulation-panel">
+            <h3>Strategic Decision Simulator</h3>
+            <p>Adjust the parameters below to see how different leadership approaches affect outcomes:</p>
+
+            <div class="slider-container">
+                <label class="slider-label">Technical Depth vs. Business Focus</label>
+                <input type="range" class="slider" id="techSlider" min="0" max="100" value="75" onchange="updateSimulation()">
+            </div>
+
+            <div class="slider-container">
+                <label class="slider-label">Short-term Profits vs. Long-term Vision</label>
+                <input type="range" class="slider" id="visionSlider" min="0" max="100" value="80" onchange="updateSimulation()">
+            </div>
+
+            <div class="slider-container">
+                <label class="slider-label">Risk Aversion vs. Bold Bets</label>
+                <input type="range" class="slider" id="riskSlider" min="0" max="100" value="85" onchange="updateSimulation()">
+            </div>
+
+            <div class="result-display" id="simulationResult">
+                <h4>Your Leadership Profile</h4>
+                <p>Adjust the sliders to see how your approach compares to Jensen's philosophy</p>
+            </div>
+        </div>
+
+        <div class="insight-card">
+            <div class="quote">The more successful you are, the more help you can give. The more help you give, the more successful you become</div>
+            <p><strong>Application:</strong> Leadership isn't about having all the answers—it's about creating conditions where breakthrough solutions emerge from your team.</p>
+        </div>
+    </div>
+
+    <!-- Future Builder Experience -->
+    <div class="experience-section" id="future">
+        <div class="progress-bar">
+            <div class="progress-fill" style="width: 90%"></div>
+        </div>
+
+        <div class="section-header">
+            <h2 class="section-title">Building the Future</h2>
+            <p>Use Jensen's principles to make strategic bets on emerging technologies. Your decisions will shape what comes next.</p>
+        </div>
+
+        <div class="decision-point">
+            <div class="decision-question">
+                It's 2024. You have $10B to invest across emerging technologies. Using Jensen's framework of "building for the inflection point you see coming," where do you place your bets?
+            </div>
+
+            <div class="choices-grid">
+                <div class="choice-button" onclick="makeChoice('future', 'quantum')">
+                    <div class="choice-title">Quantum Computing</div>
+                    <p>$4B on quantum processors, $3B on quantum software, $3B on quantum networking</p>
+                </div>
+                <div class="choice-button" onclick="makeChoice('future', 'bio')">
+                    <div class="choice-title">AI + Biology</div>
+                    <p>$5B on AI drug discovery, $3B on digital biology, $2B on synthetic biology</p>
+                </div>
+                <div class="choice-button" onclick="makeChoice('future', 'robotics')">
+                    <div class="choice-title">Embodied AI</div>
+                    <p>$4B on humanoid robots, $4B on AI brains, $2B on manufacturing</p>
+                </div>
+            </div>
+
+            <div class="consequence-panel" id="future-consequence">
+                <!-- Consequences will be shown here -->
+            </div>
+        </div>
+
+        <div class="action-panel">
+            <h3>Your Personal Action Plan</h3>
+            <p>Based on your choices, here's how you can apply Jensen's principles to your own leadership:</p>
+            
+            <button class="cta-button" onclick="generateActionPlan()">
+                Generate My Leadership Plan
+            </button>
+            
+            <div id="actionPlanResult" style="margin-top: 2rem; text-align: left; display: none;">
+                <!-- Action plan will appear here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation">
+        <button class="nav-button" onclick="goHome()">Start Over</button>
+        <button class="nav-button" onclick="nextSection()">Continue</button>
+    </div>
+
+    <script>
+        let currentSection = 'hero';
+        let userChoices = {};
+        let currentPerspective = 'ceo';
+
+        function startExperience(experience) {
+            document.getElementById('hero').style.display = 'none';
+            document.getElementById(experience).classList.add('active');
+            currentSection = experience;
+        }
+
+        function makeChoice(section, choice) {
+            userChoices[section] = choice;
+            showConsequence(section, choice);
+        }
+
+        function showConsequence(section, choice) {
+            const panel = document.getElementById(section + '-consequence');
+            let content = '';
+
+            if (section === 'crisis') {
+                if (choice === 'survival') {
+                    content = `
+                        <h4>The Safe Path Result</h4>
+                        <p><strong>Short-term:</strong> You survive the crisis and maintain stability.</p>
+                        <p><strong>Long-term:</strong> When AI explodes in 2012, competitors with parallel computing capabilities dominate. You're left behind trying to catch up.</p>
+                        <p><strong>Jensen's Insight:</strong> "Strategic retreat is not failure; it's intelligence" - but sometimes the retreat becomes permanent.</p>
+                    `;
+                } else if (choice === 'pivot') {
+                    content = `
+                        <h4>The Bold Bet Result</h4>
+                        <p><strong>Short-term:</strong> Painful years of investment with no clear ROI. Board pressure intensifies.</p>
+                        <p><strong>Long-term:</strong> When deep learning researchers discover GPUs accelerate AI in 2012, you're the only company ready. Market cap grows 100x.</p>
+                        <p><strong>Jensen's Insight:</strong> "Build for the inflection point you see coming, not the market that exists today."</p>
+                    `;
+                } else {
+                    content = `
+                        <h4>The Hedge Result</h4>
+                        <p><strong>Short-term:</strong> Moderate investment yields moderate progress.</p>
+                        <p><strong>Long-term:</strong> You're positioned for AI but not dominant. Competitors with full commitment pull ahead.</p>
+                        <p><strong>Jensen's Insight:</strong> "We don't make compromises. We make trade-offs with full awareness of what we're giving up."</p>
+                    `;
+                }
+            } else if (section === 'future') {
+                if (choice === 'quantum') {
+                    content = `
+                        <h4>The Quantum Bet</h4>
+                        <p><strong>2030 Outcome:</strong> Quantum computing breakthrough happens, but practical applications are still limited to specific use cases.</p>
+                        <p><strong>Market Impact:</strong> You own the quantum infrastructure when it becomes commercially viable around 2035.</p>
+                        <p><strong>Jensen's Lesson:</strong> "If you're not a little bit scared, you're not working on something important enough."</p>
+                    `;
+                } else if (choice === 'bio') {
+                    content = `
+                        <h4>The Biology Revolution</h4>
+                        <p><strong>2030 Outcome:</strong> AI-designed drugs enter trials 10x faster. Digital biology becomes the new platform.</p>
+                        <p><strong>Market Impact:</strong> You've created the infrastructure for the biological century - every biotech company needs your platform.</p>
+                        <p><strong>Jensen's Lesson:</strong> "Democratize computing power, and you democratize opportunity."</p>
+                    `;
+                } else {
+                    content = `
+                        <h4>The Robotics Future</h4>
+                        <p><strong>2030 Outcome:</strong> Humanoid robots begin replacing human labor in manufacturing and services.</p>
+                        <p><strong>Market Impact:</strong> You've built the "Android of Robotics" - every robot runs your AI brain platform.</p>
+                        <p><strong>Jensen's Lesson:</strong> "Every company needs to become a computing company."</p>
+                    `;
+                }
+            }
+
+            panel.innerHTML = content;
+            panel.classList.add('show');
+        }
+
+        function switchPerspective(perspective) {
+            // Update active button
+            document.querySelectorAll('.perspective-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            currentPerspective = perspective;
+            updateSimulation();
+        }
+
+        function updateSimulation() {
+            const tech = document.getElementById('techSlider').value;
+            const vision = document.getElementById('visionSlider').value;
+            const risk = document.getElementById('riskSlider').value;
+            const result = document.getElementById('simulationResult');
+
+            let content = '<h4>Your Leadership Profile</h4>';
+            
+            // Calculate Jensen alignment score
+            const jensenScore = Math.round((parseInt(tech) + parseInt(vision) + parseInt(risk)) / 3);
+            
+            if (jensenScore > 75) {
+                content += `<p><strong>Jensen Alignment: ${jensenScore}%</strong> - You're thinking like Jensen! This combination of technical depth, long-term vision, and bold risk-taking creates breakthrough innovation.</p>`;
+            } else if (jensenScore > 50) {
+                content += `<p><strong>Jensen Alignment: ${jensenScore}%</strong> - You're on the right track but may be playing it too safe for breakthrough results.</p>`;
+            } else {
+                content += `<p><strong>Jensen Alignment: ${jensenScore}%</strong> - This approach prioritizes stability over breakthrough innovation. Consider where bolder moves might create opportunity.</p>`;
+            }
+
+            // Add perspective-specific insights
+            if (currentPerspective === 'ceo') {
+                content += '<p><strong>CEO Impact:</strong> Your choices affect company culture, investor confidence, and long-term positioning.</p>';
+            } else if (currentPerspective === 'engineer') {
+                content += '<p><strong>Engineering Impact:</strong> These parameters determine what problems your team tackles and how ambitious they can be.</p>';
+            } else {
+                content += '<p><strong>Investor Impact:</strong> This profile affects risk/reward ratios and timeline for returns.</p>';
+            }
+
+            result.innerHTML = content;
+        }
+
+        function generateActionPlan() {
+            const planDiv = document.getElementById('actionPlanResult');
+            let plan = `
+                <h4>Your Personalized Jensen Huang Leadership Plan</h4>
+                <div style="background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 15px; margin: 1rem 0;">
+                    <h5>1. Identify Your "Impossible" Problem</h5>
+                    <p>What challenge in your industry do others avoid because it seems too difficult? That's where your breakthrough opportunity lives.</p>
+                    
+                    <h5>2. Build Technical Understanding</h5>
+                    <p>Develop deep knowledge of the fundamental technologies affecting your field. Strategic vision requires technical depth.</p>
+                    
+                    <h5>3. Practice Productive Paranoia</h5>
+                    <p>Regularly ask: "What could disrupt us?" and "What inflection point are we missing?" Stay vigilant about threats and opportunities.</p>
+                    
+                    <h5>4. Make Conscious Trade-offs</h5>
+                    <p>Before every decision, explicitly identify what you're giving up. Avoid compromises that dilute focus.</p>
+                    
+                    <h5>5. Invest Ahead of Demand</h5>
+                    <p>Build capabilities for future opportunities even when current market doesn't justify it. The best time to plant a tree was 20 years ago.</p>
+                </div>
+            `;
+            
+            // Add personalized recommendations based on choices
+            if (userChoices.crisis === 'pivot') {
+                plan += '<p><strong>Your Bold Bet Mindset:</strong> You understand the power of betting big on breakthrough opportunities. Channel this into identifying your next impossible problem.</p>';
+            }
+            
+            if (userChoices.future) {
+                plan += `<p><strong>Your Future Vision:</strong> Your choice to invest in ${userChoices.future} shows you think in decades, not quarters. Apply this long-term thinking to every strategic decision.</p>`;
+            }
+
+            planDiv.innerHTML = plan;
+            planDiv.style.display = 'block';
+        }
+
+        function nextSection() {
+            if (currentSection === 'crisis') {
+                document.getElementById('crisis').classList.remove('active');
+                document.getElementById('leadership').classList.add('active');
+                currentSection = 'leadership';
+            } else if (currentSection === 'leadership') {
+                document.getElementById('leadership').classList.remove('active');
+                document.getElementById('future').classList.add('active');
+                currentSection = 'future';
+            }
+        }
+
+        function goHome() {
+            document.querySelectorAll('.experience-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById('hero').style.display = 'flex';
+            currentSection = 'hero';
+        }
+
+        // Initialize simulation
+        setTimeout(() => {
+            if (document.getElementById('simulationResult')) {
+                updateSimulation();
+            }
+        }, 100);
+    </script>
+</body>
+</html>
